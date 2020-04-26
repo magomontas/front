@@ -1,0 +1,77 @@
+<div class="container m-3">
+  <div class="header">
+    <h1 class="header-title">
+      Creación de usuario
+    </h1>
+    <nav aria-label="breadcrumb">
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Dashboard</a></li>
+        <li class="breadcrumb-item"><a [routerLink]="['/usuarios']">Usuarios</a></li>
+        <li class="breadcrumb-item">Añadir Usuario</li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <form #usuarioForm="ngForm" (ngSubmit)="onSubmit(usuarioForm)" style="margin-top: 0px" autocomplete="off">
+        <h5>Complete el formulario</h5>
+        <div class="alert alert-success alert-dismissible" role="alert" *ngIf="mensaje">
+          <div class="alert-message">
+            {{mensaje}}
+          </div>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">x</span>
+          </button>
+        </div>
+        <div class="alert alert-danger alert-dismissible" role="alert" *ngIf="mensajeError">
+          <div class="alert-message">
+            {{mensajeError}}
+          </div>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">x</span>
+          </button>
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-6">
+            <label>Nombre Completo</label>
+            <input type="text" name="nombres" #nombres="ngModel" [(ngModel)]="usuario.nombres"
+                   placeholder="Ingrese los nombres completos"
+                   required class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label>Apellidos</label>
+            <input type="text" name="apellidos" #apellidos="ngModel" [(ngModel)]="usuario.apellidos"
+                   placeholder="Ingrese los Apellidos"
+                   required class="form-control">
+          </div>
+          <div class="col-md-8">
+            <label>Correo Electrónico</label>
+            <input type="email" name="email" #email="ngModel" [(ngModel)]="usuario.email"
+                   required class="form-control" placeholder="Ingrese un Email">
+          </div>
+          <div class="col-md-4">
+            <label>Contraseña</label>
+            <input type="password" name="password" #password="ngModel" [(ngModel)]="usuario.password"
+                   required class="form-control" placeholder="Ingrese la contraseña">
+          </div>
+          <div class="col-md-12">
+            <label>Rol</label>
+            <select name="role" #role="ngModel" [(ngModel)]="usuario.role" required class="form-control">
+              <option value="" disabled>--Seleccione--</option>
+              <option value="administrador">Administrador</option>
+              <option value="bodeguero">Bodeguero</option>
+              <option value="usuario">Usuario</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-success float-right mt-3">Registrar</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+
+

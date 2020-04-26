@@ -1,0 +1,90 @@
+<div class="container m-3">
+  <div class="header">
+    <h1 class="header-title">
+      Producto a editar: {{producto.titulo}}
+    </h1>
+    <nav aria-label="breadcrumb">
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Dashboard</a></li>
+        <li class="breadcrumb-item"><a [routerLink]="['/productos']">Productos</a></li>
+        <li class="breadcrumb-item">Editar Productos</li>
+      </ul>
+    </nav>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <form #productoForm="ngForm" (ngSubmit)="onSubmit(productoForm)" style="margin-top: 0px">
+        <h5>Complete el formulario</h5>
+
+        <div class="alert alert-success alert-dismissible" role="alert" *ngIf="success_message">
+          <div class="alert-message">
+            {{success_message}}
+          </div>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">x</span>
+          </button>
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-6">
+            <label>Titulo del Producto</label>
+            <input type="text" name="titulo" #titulo="ngModel" [(ngModel)]="producto.titulo"
+                   placeholder="Ingrese un nombre"
+                   required class="form-control">
+          </div>
+          <div class="col-md-3">
+            <label>Precio Compra</label>
+            <input type="number" name="precio_compra" #precio_compra="ngModel" [(ngModel)]="producto.precio_compra"
+                   required class="form-control">
+          </div>
+          <div class="col-md-3">
+            <label>Precio Venta</label>
+            <input type="number" name="precio_venta" #precio_venta="ngModel" [(ngModel)]="producto.precio_venta"
+                   required class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label>Categoria</label>
+            <select name="categoria" #id_categoria="ngModel" [(ngModel)]="producto.id_categoria" class="form-control">
+              <option value="" disabled>--Seleccione--</option>
+              <option *ngFor="let i of categorias" value="{{i._id}}">{{i.titulo.toUpperCase()}}</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label>Puntos</label>
+            <input type="number" #puntos="ngModel" [(ngModel)]="producto.puntos" name="puntos" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label for="img" class="boton-standar-rw">Elige una imagen</label>
+            <input type="file" class="form-control upload-file-buton" id="img" (change)="onUpload($event)"
+                   accept=".png, .jpg">
+            <input type="text" name="imagen" #imagen="ngModel" [(ngModel)]="producto.imagen"
+                   [value]="urlImage | async" id="url">
+            <span *ngIf="urlImage ? imagen.touched: imagen.invalid"></span>
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped bg-success" role="progressbar" id="progressBar1"
+                   [style.width]="(uploadPercent | async) + '%'">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <label>Descripción</label>
+            <textarea name="descripcion" cols="10" rows="10" #descripcion="ngModel" [(ngModel)]="producto.descripcion"
+                      class="form-control">
+            Ingrese una Descripción
+          </textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary float-right mt-3" [disabled]="imagen.value === '' && productoForm.invalid">Actualizar</button>
+      </form>
+    </div>
+    <div class="col-md-4">
+      <img [src]="imgSelect || '../../../../assets/img/deafult.png'" alt="Imagen" class="rounded-circle img-responsive ml-5" width="128" height="128">
+      <div class="mt-2">
+        <input type="file" required (change)="imgSelected($event)" class="btn btn-primary" style="width: 100%; !important;">
+        <small>For best results, use my profile image</small>
+      </div>
+    </div>
+  </div>
+
+</div>
+

@@ -1,0 +1,123 @@
+<div class="container-fluid m-3">
+  <div class="header">
+    <h1 class="header-title">
+      Creación de ventas
+    </h1>
+    <nav aria-label="breadcrumb">
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Dashboard</a></li>
+        <li class="breadcrumb-item"><a [routerLink]="['/ventas']">Ventas</a></li>
+        <li class="breadcrumb-item">Añadir Ventas</li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <form>
+
+        <div class="card">
+          <h5 class="card-title m-2">Datos de la venta</h5>
+          <div class="card-body">
+            <div class="form-row form-group m-3">
+              <div class="col-md-4">
+                <label><b>Trabajador</b></label>
+                <input type="text" disabled class="form-control" value="{{identity.nombres}}">
+              </div>
+              <div class="col-md-4">
+                <label>Clientes</label>
+                <select name="" class="form-control">
+                  <option value="" disabled>--Seleccione--</option>
+                </select>
+              </div>
+              <div class="col-lg-2">
+                <a [routerLink]="['/cliente/create']" class="btn btn-primary">Nuevo Cliente</a>
+              </div>
+              <div class="col-lg-2">
+                <button type="submit" class="btn btn-success">Registrar Venta</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+            <div class="col-12 col-lg-12 mt-3" *ngIf="errorMensaje">
+              <div class="alert alert-danger alert-dismissible" role="alert">
+                <div class="alert-message">
+                  {{errorMensaje}}
+                </div>
+                <button type="button" class="close" (click)="close_alert()" data-dismiss="alert" aria-label="close">
+                  <span aria-hidden="true">x</span>
+                </button>
+              </div>
+            </div>
+          <h5 class="card-title m-2">Detalle de la venta</h5>
+          <div class="card-body">
+            <form #detalleForm="ngForm" (ngSubmit)="save_detalle(detalleForm)">
+            <div class="form-row form-group m-3">
+              <div class="col-md-3">
+                <label>Productos</label>
+                <select name="idproducto" #idproducto="ngModel" [(ngModel)]="detalle.idproducto"
+                        class="form-control" (change)="get_data_producto($event.target.value)">
+                  <option value="" disabled>--Seleccione--</option>
+                  <option *ngFor="let i of productos" value="{{i._id}}">{{i.titulo}}</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label>Stock Actual</label>
+                <input type="text" readonly class="form-control" value="{{producto.stock}}">
+              </div>
+              <div class="col-lg-3">
+                <label>Cantidad</label>
+                <input type="number" name="cantidad" min="0" class="form-control" #cantidad="ngModel" [(ngModel)]="detalle.cantidad">
+              </div>
+              <div class="col-lg-2">
+                <button type="submit" class="btn btn-primary but1">Agregar</button>
+              </div>
+            </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="card">
+          <h5 class="card-title m-2">Productos</h5>
+          <div class="card-body">
+            <p>Productos en la cesta</p>
+            <table class="table table-striped table-hover table-sm">
+              <thead>
+              <th>Eliminar</th>
+              <th>Producto</th>
+              <th>Precio</th>
+              <th>Cantidad</th>
+              <th>Subtotal</th>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of data_detalle; let idx = index">
+                <td>
+                  <button class="btn btn-danger btn-sm" (click)="eliminar(idx, item.precio_venta, item.cantidad)"><i class="fa fa-trash"></i></button>
+                </td>
+                <td>{{item.producto}}</td>
+                <td>{{item.precio_venta}}</td>
+                <td>{{item.cantidad}}</td>
+                <td><b>$ {{(item.cantidad) * (item.precio_venta)}}</b></td>
+              </tr>
+              </tbody>
+              <tfoot>
+              <tr>
+                <td><b>Total</b></td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>$ {{total}}</td>
+              </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+
+      </form>
+    </div>
+  </div>
+
+</div>

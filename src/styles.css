@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css?family=Lobster|Montserrat&display=swap');
+
+.body{
+  height: 100%;
+  /*background: #ffe259;*/
+  /*!*background: url('./assets/img/bg1.jpg');*!*/
+  background: url('./assets/img/bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  /*background-color: #21D4FD;*/
+  /*background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);*/
+  /*color: white !important;*/
+}
+.alertTest{
+  background: #00ff3b;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+}

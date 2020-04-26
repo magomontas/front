@@ -1,0 +1,144 @@
+<div id="content" class="p-4 p-md-5 pt-5">
+
+  <div class="main">
+      <div class="container-fluid">
+
+        <div class="header">
+          <h1 class="header-title">
+            Productos
+          </h1>
+          <nav aria-label="breadcrumb">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Dashboard</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Productos</li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="alert alert-success alert-dismissible" role="alert" *ngIf="mensaje">
+          <div class="alert-message">
+            {{mensaje}}
+          </div>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">x</span>
+          </button>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 col-xl-12">
+            <div class="card-header">
+              <h5 class="card-title">Listado de productos</h5>
+              <div class="row">
+                <div class="col-lg-6">
+                  <form #searchForm='ngForm' (ngSubmit)="search(searchForm)">
+                    <div class="input-group" id="show_hide_password">
+                      <input class="form-control" type="text" placeholder="Buscar producto"
+                             name="filtro" [(ngModel)]="filtro">
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-info"><i class="fas fa-search"></i></button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="col-lg-2">
+                  <div class="btn-group">
+                    <button type="button" class="btn mb-1 btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Opciones
+                    </button>
+                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 31px, 0px);">
+                      <a class="dropdown-item" [routerLink]="['/producto/registrar']">Registrar producto</a>
+                      <a class="dropdown-item" [routerLink]="['/categorias']">Ver Categorias</a>
+                      <a class="dropdown-item" [routerLink]="['/categoria/crear']">Registrar Categoria</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <table class="table table-striped table-hover">
+              <thead class="thead-dark">
+              <tr>
+                <th>Nombre</th>
+                <th>Stock</th>
+                <th>Precio Venta</th>
+                <th>Precio Compra</th>
+                <th>Opciones</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let i of productos | paginate: { itemsPerPage: 10, currentPage: p }, let idx = index">
+                <td>
+                  <img [src]="i.imagen" width="48" height="48" class="rounded-circle mr-2"
+                       alt="Avatar">
+                  {{i.titulo}}
+                </td>
+                <td>{{i.stock}}</td>
+                <td><b>$</b>{{i.precio_venta}}</td>
+                <td><b>$</b>{{i.precio_compra}}</td>
+                <td>
+                  <a [routerLink]="['/producto/editar/',i._id]" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                  <a (click)="delete(i._id)" class="btn btn-danger ml-2"><i class="fa fa-trash"></i></a>
+                  <a class="btn btn-info ml-2" data-toggle="modal" [attr.data-target]="'#modal-stock-'+ idx" (click)="getid(i._id)">
+                    <i class="fa fa-edit"></i> Aumentar stock
+                  </a>
+                </td>
+
+                <!--Modal Para aumentar stock-->
+                <div class="modal fade" [attr.id]="'modal-stock-'+ idx" tabindex="-1" role="dialog" style="display: none;"
+                     aria-hidden="true" id="modalstock">
+                  <form #stockForm="ngForm" (ngSubmit)="aumentar_stock(stockForm)" autocomplete="off">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Aumentar Stock de {{i.titulo}}</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">x</span>
+                          </button>
+                        </div>
+                        <div class="modal-body m-3">
+                          <label>Cantidad</label>
+                          <input type="number" #stock="ngModel" [(ngModel)]="producto_stock.stock" name="stock" placeholder="Aumentar stock"
+                                 required class="form-control">
+
+                          <button type="submit" class="btn btn-primary float-right mt-3 mr-2">Aumentar</button>
+                          <button type="button" class="btn btn-danger float-right mt-3 mr-2" data-dismiss="modal">Cerrar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-12 col-xl-12">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          </div>
+        </div>
+
+      </div>
+  </div>
+</div>
+
+
+
+<!--Modal Para registrar categorias-->
+<div class="modal fade" id="modal-save-categoria" tabindex="-1" role="dialog" style="display: none;"
+     aria-hidden="true">
+  <form>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Registrar Categorias</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">x</span>
+          </button>
+        </div>
+        <div class="modal-body m-3">
+          <button type="button" class="btn btn-danger float-right mt-3 mr-2" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

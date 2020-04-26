@@ -1,0 +1,61 @@
+<div class="container m-3">
+  <div class="header">
+    <h1 class="header-title">
+      Creación de clientes
+    </h1>
+    <nav aria-label="breadcrumb">
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Dashboard</a></li>
+        <li class="breadcrumb-item"><a [routerLink]="['/clientes']">Clientes</a></li>
+        <li class="breadcrumb-item">Añadir Cliente</li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <form #clienteForm="ngForm" (ngSubmit)="onSubmit(clienteForm)" style="margin-top: 0px" autocomplete="off">
+        <h5>Complete el formulario</h5>
+        <div class="alert alert-success alert-dismissible" role="alert" *ngIf="success_message">
+          <div class="alert-message">
+            {{success_message}}
+          </div>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">x</span>
+          </button>
+        </div>
+        <div class="alert alert-danger alert-dismissible" role="alert" *ngIf="error_message">
+          <div class="alert-message">
+            {{error_message}}
+          </div>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">x</span>
+          </button>
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-8">
+            <label>Nombre Completo</label>
+            <input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="cliente.nombres"
+                   placeholder="Ingrese un nombre"
+                   required class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label>Correo Electrónico</label>
+            <input type="email" name="correo" #correo="ngModel" [(ngModel)]="cliente.correo"
+                   required class="form-control" placeholder="Ingrese un Email">
+          </div>
+          <div class="col-md-12">
+            <label>Dui</label>
+            <input type="text" name="dui" #dui="ngModel" [(ngModel)]="cliente.dui"
+                   required class="form-control" placeholder="Ingrese el N° de Dui">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-success float-right mt-3">Registrar</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+

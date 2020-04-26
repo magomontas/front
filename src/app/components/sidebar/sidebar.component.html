@@ -1,0 +1,35 @@
+<nav id="sidebar" *ngIf="token">
+  <div class="img bg-wrap text-center py-4" style="background-image: url('../../../assets/img/bg_1.jpg');">
+    <div class="user-logo">
+      <div class="img" style="background-image: url('../../../assets/img/logo.jpg');"></div>
+      <h3>{{identity.email}}</h3>
+    </div>
+  </div>
+  <ul class="list-unstyled components mb-5">
+    <li>
+      <a [routerLink]="['/dashboard']" routerLinkActive="active"><span class="fa fa-home mr-3"></span> Home</a>
+    </li>
+    <li>
+      <a [routerLink]="['/productos']" routerLinkActive="active"><span class="fa fa-download mr-3 notif"><small
+        class="d-flex align-items-center justify-content-center">5</small></span> Productos</a>
+    </li>
+    <li>
+      <a [routerLink]="['/categorias']" routerLinkActive="active"><span class="fa fa-gift mr-3"></span> Categorias</a>
+    </li>
+    <div>
+    <li>
+      <a [routerLink]="['/clientes']" routerLinkActive="active"><span class="fa fa-trophy mr-3"></span> Clientes</a>
+    </li>
+    <li>
+      <a [routerLink]="['/usuarios']" routerLinkActive="active"><span class="fa fa-cog mr-3"></span> Usuarios</a>
+    </li>
+    </div>
+    <li>
+      <a [routerLink]="['/ventas']" routerLinkActive="active"><span class="fa fa-support mr-3"></span> Ventas</a>
+    </li>
+    <li>
+      <a [routerLink]="['/logout', 1]"><span class="fa fa-sign-out mr-3"></span> Cerrar Sesión</a>
+    </li>
+  </ul>
+
+</nav>

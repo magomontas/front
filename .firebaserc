@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "images-3517a": {
+      "hosting": {
+        "front": [
+          "images-3517a"
+        ]
+      }
+    }
+  }
+}
